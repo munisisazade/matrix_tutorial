@@ -5,14 +5,22 @@
 </head>
 <body>
 <ul>
-	{% for x in news %}
-		<li><a href="{{ x.get_absolute_url }}">{{ x.title }}</a></li>
+	{% for news in news_list %}
+		<li><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></li>
 	{% endfor %}
     
 </ul>
 <form method="post">
     {% csrf_token %}
-    <input type="text" value="title" name="title">
+    {% comment %}<input type="text" value="title" name="title">
+    <textarea name="description" id="" cols="30" rows="10"></textarea>{% endcomment %}
+    <h1><a href="{% url 'news:index' %}">ana sehife</a></h1>
+    {% for field in form %}
+        <label for="">{{ field.label }}</label>
+        {{ field }}
+        {{ field.errors }}
+    {% endfor %}
+
     <input type="submit" value="Go">
 </form>
 </body>

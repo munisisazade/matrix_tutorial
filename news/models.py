@@ -6,6 +6,8 @@ from django.urls import reverse
 # Create your models here.
 class Article(models.Model):
     title = models.CharField(max_length=225)
+    name = models.CharField(max_length=2, null=True)
+    status = models.BooleanField(default=True)
     description = models.TextField()
     publish_date = models.DateTimeField(default=timezone.now)
 
@@ -18,4 +20,4 @@ class Article(models.Model):
         verbose_name_plural = "Xəbərlər"
 
     def get_absolute_url(self):
-        return reverse("detail-news", kwargs={"id": self.id})
+        return reverse("munis:detail-news", kwargs={"name": self.id}) # '/news-detail/6/'
