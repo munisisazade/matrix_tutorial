@@ -2,11 +2,9 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.utils.safestring import mark_safe
 
-GENDER = (
-    (True, "Kişi"),
-    (False, "Qadın")
-)
+from news.options.tool import GENDER, get_avatar_path
 
 User = get_user_model()
 
@@ -14,9 +12,13 @@ User = get_user_model()
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.BooleanField(choices=GENDER, default=True)
+    image = models.ImageField(upload_to=get_avatar_path, null=True)
 
-    def __str__(self):
-        return "{}".format(self.user.get_full_name())
+    def get_image(self):
+        if self.image:
+            return mark_safe("<img style='width:200px' src='{}' alt=''>".format(self.image.url))
+        else:
+            return mark_safe("<img src='{}' alt=''>".format("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"))
 
 
 # Create your models here.

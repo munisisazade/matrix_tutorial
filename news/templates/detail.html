@@ -5,7 +5,8 @@
 </head>
 <body>
 <h1>{{ object.title }}</h1>
-<p>{{ object.description }}</p>
+<p>{{ object.description|safe }}</p>
+<p>{{ object.author.get_image|safe }}</p>
 <time>{{ object.publish_date }}</time>
 </body>
 </html>
