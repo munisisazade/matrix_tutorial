@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from news.models import Article
 from news.forms import ArticleForm
-
+from django.contrib import messages
 
 # Create your views here.
 
@@ -24,6 +24,7 @@ def index(request):
             article = form.save()
         context["news_list"] = Article.objects.all()
         context["form"] = form
+        messages.success(request, "Form ugurla dolduruldu")
         return render(request, "index.html", context)
 
 
