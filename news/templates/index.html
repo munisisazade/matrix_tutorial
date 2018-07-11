@@ -3,7 +3,13 @@
 <head>
     <title>Test</title>
 </head>
+<style>
+    .form-control {
+        background: red;
+    }
+</style>
 <body>
+{% load widget_tweaks %}
 <ul>
     {% for news in news_list %}
         {% if forloop.counter|divisibleby:"2" %}
@@ -23,13 +29,29 @@
         {% endfor %}
     {% endif %}
 
+    <div class="pagination">
+    <span class="step-links">
+        {% if news_list.has_previous %}
+            <a href="?page={{ news_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ news_list.number }} of {{ news_list.paginator.num_pages }}.
+        </span>
+
+        {% if news_list.has_next %}
+            <a href="?page={{ news_list.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>
+
     {% comment %}<input type="text" value="title" name="title">
     <textarea name="description" id="" cols="30" rows="10"></textarea>{% endcomment %}
     {#    <h1><a href="{% url 'news:index' %}">ana sehife</a></h1>#}
 
     {% for field in form %}
         <label for="">{{ field.label }}</label>
-        {{ field }}
+        {{ field|add_class:"form-control"|add_class:"test" }}
         {{ field.errors }}
     {% endfor %}
 
